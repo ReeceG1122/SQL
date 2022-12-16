@@ -1,0 +1,33 @@
+--create fruit store database
+
+CREATE TABLE fruit_shop (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    sold INTEGER,
+    price INTEGER,
+    rating INTEGER);
+
+INSERT INTO fruit_shop VALUES (1, "Apples", 100, 2.99, 5);
+INSERT INTO fruit_shop VALUES (2, "Bananas", 69, 3.99, 4);
+INSERT INTO fruit_shop VALUES (3, "Oranges", 154, 2.99, 5);
+INSERT INTO fruit_shop VALUES (4, "Peaches", 48, 3.99, 3);
+INSERT INTO fruit_shop VALUES (5, "Pears", 100, 4.99, 4);
+INSERT INTO fruit_shop VALUES (6, "Tomatos", 30, 4.99, 4);
+INSERT INTO fruit_shop VALUES (7, "Grapes", 46, 2.99, 5);
+INSERT INTO fruit_shop VALUES (8, "Kiwis", 40, 6.99, 2);
+INSERT INTO fruit_shop VALUES (9, "Starfruit", 10, 7.99, 4);
+INSERT INTO fruit_shop VALUES (10, "Dragonfruit", 25, 7.99, 3);
+INSERT INTO fruit_shop VALUES (11, "Passionfruit", 59, 8.99, 5);
+INSERT INTO fruit_shop VALUES (12, "Strawberries", 38, 3.99, 4);
+INSERT INTO fruit_shop VALUES (13, "Blueberries", 35, 2.99, 2);
+INSERT INTO fruit_shop VALUES (14, "Mangos", 27, 4.99, 5);
+INSERT INTO fruit_shop VALUES (15, "Lemons", 73, 1.99, 2);
+
+--display database sorted by number sold
+SELECT * FROM fruit_shop ORDER BY sold;
+
+--display the fruit with poor ratings
+SELECT * FROM fruit_shop WHERE rating < 4;
+
+--display the 5 most popular fruit
+SELECT name FROM fruit_shop ORDER BY sold DESC LIMIT 5;
