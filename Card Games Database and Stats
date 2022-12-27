@@ -67,36 +67,51 @@ INSERT INTO card_games(date_played,game_name,player_name,score) VALUES ('2015/03
 SELECT * FROM card_games;
 
 /* Which players hold the best record in each game? */
-SELECT player_name, game_name, MAX(score) FROM card_games GROUP BY game_name;
+SELECT player_name, game_name, MAX(score) FROM card_games 
+GROUP BY game_name;
 
 /* Which players hold the worst record in each game? */
-SELECT player_name, game_name, MIN(score) FROM card_games GROUP BY game_name;
+SELECT player_name, game_name, MIN(score) FROM card_games 
+GROUP BY game_name;
 
 /* What is the average score in each type of game? */
-SELECT game_name, ROUND (AVG(score)) FROM card_games GROUP BY game_name;
+SELECT game_name, ROUND (AVG(score)) FROM card_games 
+GROUP BY game_name;
 
 /* Who are the top 3 highest scoring players across all games? */
-SELECT player_name, SUM (score) AS total_points FROM card_games GROUP BY player_name ORDER BY total_points DESC LIMIT 3;
+SELECT player_name, SUM (score) AS total_points FROM card_games 
+GROUP BY player_name 
+ORDER BY total_points DESC 
+LIMIT 3;
 
 /* Which game types are low scoring? */
-SELECT game_name, ROUND (AVG(Score)) AS avg_score FROM card_games GROUP BY game_name HAVING avg_score < 100;
+SELECT game_name, ROUND (AVG(Score)) AS avg_score FROM card_games 
+GROUP BY game_name 
+HAVING avg_score < 100;
 
 /* Which game types are high scoring? */
-SELECT game_name, ROUND (AVG(Score)) AS avg_score FROM card_games GROUP BY game_name HAVING avg_score > 100;
+SELECT game_name, ROUND (AVG(Score)) AS avg_score FROM card_games 
+GROUP BY game_name 
+HAVING avg_score > 100;
 
 /* Who scored the highest in each game type in the month of February? */
-SELECT player_name, game_name, MAX(score) FROM card_games WHERE date_played IN("2015/02/04", "2015/02/11", "2015/02/18", "2015/02/25") GROUP BY game_name;
+SELECT player_name, game_name, MAX(score) FROM card_games 
+WHERE date_played IN("2015/02/04", "2015/02/11", "2015/02/18", "2015/02/25") 
+GROUP BY game_name;
 
-/* Assigning letter ranks to players based off of their point totals. */
+/* Assign players tier rankingss based on their point totals */
 SELECT player_name, SUM(score) AS total_points,
     CASE
-        WHEN total_points >= 2000 THEN "S-Rank"
-        WHEN total_points <= 1999 AND >= 1500 THEN "A-Rank"
-        WHEN total_points <= 1499 AND >= 1000 THEN "B-Rank"
-        WHEN total_points <= 999 AND >= 500 THEN "C-Rank"
+        WHEN SUM(score) >= 2000 THEN "S-Rank"
+        WHEN SUM(score) <= 1999 AND SUM(score) >= 1500 THEN "A-Rank"
+        WHEN SUM(score) <= 1499 AND SUM(score) >= 1000 THEN "B-Rank"
+        WHEN SUM(score) <= 999 AND SUM(score) >= 500 THEN "C-Rank"
         ELSE "D-Rank"
     END as letter_grade 
 FROM card_games
-ORDER BY player_name
-GROUP BY letter_grade;
+GROUP BY player_name
+ORDER BY total_points DESC;
     
+/* What dates did they play Crazy Eights or Go Fish? Who played? */
+SELECT date_played, player_name FROM card_games 
+WHERE game_name = "Crazy Eights" OR game_name = "Go fish";
