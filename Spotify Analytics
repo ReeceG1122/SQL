@@ -1,0 +1,55 @@
+In this SQL code, I'm using SQL to sift through data from Spotify's top 50 songs of 2021.
+
+#1. What is the most used song key within the top 50? How many songs in the top 50 used this key?
+SELECT song_key, 
+count(track_name)
+FROM BIT_DB.Spotifydata
+GROUP By song_key
+ORDER By count(track_name) desc
+LIMIT 1
+;
+
+#2. Which artists had the multiple top 50 hits in 2021?
+SELECT artist_name, 
+count(track_name)
+FROM BIT_DB.Spotifydata
+GROUP By artist_name
+HAVING count(track_name) > 1
+ORDER By count(track_name) desc
+;
+
+#3. What were the 10 most popular songs of 2021?
+SELECT track_name, 
+artist_name, 
+popularity
+FROM BIT_DB.spotifydata
+ORDER BY popularity desc
+LIMIT 10
+;
+
+#4. Which song keys have the highest average popularity how many songs of each song key were there?
+SELECT song_key, 
+AVG(popularity),
+COUNT(song_key)
+FROM BIT_DB.spotifydata
+GROUP By song_key
+ORDER By AVG(popularity) desc
+;
+
+#5. Which song had the highest danceability among the top 50?
+SELECT track_name
+FROM BIT_DB.spotifydata
+ORDER By danceability desc
+LIMIT 1
+;
+
+#6. Which song was the longest? How popular was it?
+SELECT artist_name, 
+track_name,
+AVG(duration_ms) as song_length,
+popularity
+FROM BIT_DB.spotifydata
+GROUP By track_name
+ORDER By AVG(duration_ms) desc
+LIMIT 1
+;
