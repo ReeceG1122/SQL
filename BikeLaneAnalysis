@@ -1,0 +1,18 @@
+/* This file uses SQL to sort through various bike lane statistics */
+
+/* 1. Creating a CTE to find which lanes have an average safety rating of at least 4.0, then labeling them as "Safe Lanes" */
+
+WITH safety_average_cte AS(
+    SELECT street,
+    AVG(c.safetyrating) AS average_safetyrating
+    FROM CityBikeLanes c
+    GROUP BY c.street
+    )
+
+SELECT street,
+average_safetyrating,
+'Safe Lane' AS label
+FROM safety_average_cte
+WHERE average_safetyrating >= 4.0
+;
+
